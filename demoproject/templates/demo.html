@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body{
+            background-color: aqua;
+        }
+    </style>
+    <title>Demo</title>
+</head>
+<body>
+    <form method="GET" action="{% url 'submit' %}">
+        <h1>Enter values</h1>
+        <br>
+        <label for="">First value:</label>
+        <input id="num_1" type="text" name="num_1" value="">
+        <br><br>
+        <label for="">Second value:</label>
+        <input id="num_2" type="text" name="num_2" value="">
+        <br><br>
+        <input type="submit" value="ADD">
+    </form>
+</body>
+</html>
