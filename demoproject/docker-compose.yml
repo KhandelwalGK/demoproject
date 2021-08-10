@@ -1,0 +1,48 @@
+version: "3"
+services:
+   django:
+     build: .
+     image: web
+#     command: python manage.py runserver 0.0.0.0:8000
+     ports:
+        - "8000:8000"
+   celery:
+       build: 
+         dockerfile: Dockerfile.celery
+         context: .
+       image: celery
+#       command: celery -A demoproject worker --loglevel=info
+       depends_on:
+         - django
+   celery_beat:
+      build:
+         dockerfile: Dockerfile.beat
+         context: .
+      image: celery_beat
+      depends_on:
+        - django
+        - celery
+   flower:
+      build: 
+        dockerfile: Dockerfile.flower
+        context: .
+      image: flower
+      depends_on:
+        - django
+        - celery
+        - redis
+        - celery_beat
+#      command: ['flower', '--broker=redis://redis:6379', '--port=5555']
+#      environment:
+#       CELERY_BROKER_URL: redis://redis:6379
+#       CELERY_RESULT_BACKEND: redis://redis:6379
+      ports:
+       - 5555:5555
+
+   redis:
+     image: redis
+     ports:
+      - "6379:6379"
+     depends_on:
+          - django
+
